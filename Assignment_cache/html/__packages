@@ -1,0 +1,17 @@
+base
+lattice
+ggplot2
+caret
+bitops
+RCurl
+psych
+GGally
+corrplot
+survival
+Formula
+Hmisc
+plyr
+foreach
+iterators
+doMC
+randomForest
