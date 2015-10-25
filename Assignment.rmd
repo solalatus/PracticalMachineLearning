@@ -28,11 +28,11 @@ options(scipen=999)
 # Executive summary
 
 The goal of our present modeling attempt is to predict the effectiveness of persons movements based on the measurements collected by biometric sensors. 
-After briefly exploring the data we build up a predictive model, analyse it's effectiveness, and remark some caveats for further analysis.
+After briefly exploring the data I build up a predictive model, analyse it's effectiveness, and remark some caveats for further analysis.
 
 # Data source and structure
 
-For our experiments we use the human activity recognition data of **Pontifícia Universidade Católica do Rio de Janeiro**.
+For our experiments I use the human activity recognition data of **Pontifícia Universidade Católica do Rio de Janeiro**.
 The detailed description of the data can be found [here.](http://groupware.les.inf.puc-rio.br/har)
 
 
@@ -76,33 +76,33 @@ hist(as.numeric(classe), xlab="Classes", xaxt="n", main="Observations in 'classe
 axis(side=1,at=c(1,2,3,4,5), labels=c('A','B','C','D','E'))
 ``` 
 
-<br> We want to predict the correctness of movements based on the variable **classe**, which is a factor variably, classifying movements into categories ranging from *A* to *E*.
+<br> I want to predict the correctness of movements based on the variable **classe**, which is a factor variably, classifying movements into categories ranging from *A* to *E*.
 
-After analysing the training set, we found, that it contains timewindow summary metrics besides the individual observations, which add additional confusion (as well as datacolumns for averages). We decided to remove these, hence the total number of individual observations in the dataset is: $$`r num_of_data[1]`$$
+After analysing the training set, I found, that it contains timewindow summary metrics besides the individual observations, which add additional confusion (as Ill as datacolumns for averages). I decided to remove these, hence the total number of individual observations in the dataset is: $$`r num_of_data[1]`$$
 As the histogram above demonstrates, their occurence is not disproportionate, though *A* is a bit overrepresented.
 
 <br> The number of variables in the dataset is: $$`r num_of_data[2]`$$
 
-We ommit the variables in columns 1 to 7 from the modeling, since they contain general timestamp and identification information. and subset the data accordingly.
+I ommit the variables in columns 1 to 7 from the modeling, since they contain general timestamp and identification information. and subset the data accordingly.
 
-Final number of datacolumns we use for training is: $$`r final_num[2]`$$
+Final number of datacolumns I use for training is: $$`r final_num[2]`$$
 
 # Choice of prediction model and resampling
 
-Based on the complexity of the data, and the fact, that no simple linear relationship is plausible between the predicting variables and the result itself, and we have to predict a categorical variable, we consider a non-linear approach. Using **random forests as a modeling paradigm** for this dataset can be considered appropriate.
+Based on the complexity of the data, and the fact, that no simple linear relationship is plausible betIen the predicting variables and the result itself, and I have to predict a categorical variable, I consider a non-linear approach. Using **random forests as a modeling paradigm** for this dataset can be considered appropriate.
 The wide variety of predicting variables in the dataset can also be considered favourable in case of random forest, since at each slit point the number of potential classifying variables is still high.
-In our approach we consider the usage of **random forests as an appropriate resampling strategy** that ensures the low variance of our future prediction while maintaining an acceptable level of bias. 
+In our approach I consider the usage of **random forests as an appropriate resampling strategy** that ensures the low variance of our future prediction while maintaining an acceptable level of bias. 
 
 # Modeling
 
 ## Parameters
 
-For our models to be reproducible, we set the random seed to:$$`r seed`$$
+For our models to be reproducible, I set the random seed to:$$`r seed`$$
 
-Since the computational costs of training our models can easily become prohibitive, we had to override the default settings of the **CARET** package. (Even with using the **doMC** package, and registering **4 CPU cores** for computation, the running time was unmanageable. 
-Thus we have experimented with changing the **ntrees** parameter for the training, decreasing it to **30** from the original default value, which provided acceptable computation time.
+Since the computational costs of training our models can easily become prohibitive, I had to override the default settings of the **CARET** package. (Even with using the **doMC** package, and registering **4 CPU cores** for computation, the running time was unmanageable. 
+Thus I have experimented with changing the **ntrees** parameter for the training, decreasing it to **30** from the original default value, which provided acceptable computation time.
 
-During training, we intend to use **repeated cross validation**. The parameter seems to exercise positive influence on accuracy, thus validation and repeat were set to **10**.
+During training, I intend to use **repeated cross validation**. The parameter seems to exercise positive influence on accuracy, thus validation and repeat Ire set to **10**.
 
 ## First model
 
@@ -174,9 +174,9 @@ training_filtered$classe<-classe
 new_dim<-dim(training_filtered)
 ``` 
 
-As a final experiment, we lookup the list above, where the total count of correlating variables is: $$`r dim_all`$$
+As a final experiment, I lookup the list above, where the total count of correlating variables is: $$`r dim_all`$$
 
-If we consider all such variables, which themselves correlate with one other as not adding information, we can choose the ones that are members of correlation pairs **more than once** as more informative. We choose to ommit the less informative variables from the traininging set. The number of ommitted variables is: $$`r dim_throwout`$$
+If I consider all such variables, which themselves correlate with one other as not adding information, I can choose the ones that are members of correlation pairs **more than once** as more informative. I choose to ommit the less informative variables from the traininging set. [^1] The number of ommitted variables is: $$`r dim_throwout`$$
 
 The final variable number of the traininging set is thus: $$`r new_dim[2]`$$
 
@@ -196,7 +196,7 @@ mod_filtered
 #print(confM_filtered)
 ``` 
 
-After analysing the remodeling efforts, we can conclude, that the filtering of data variables **caused a minor increase in accuracy**, so this approach in this case seems favourable, thus our hypothesis about strong correlation between the variables seems warranted.
+After analysing the remodeling efforts, I can conclude, that the filtering of data variables **caused a minor increase in accuracy**, so this approach in this case seems favourable, thus our hypothesis about strong correlation betIen the variables seems warranted.
 
 # Testing of the model
 
@@ -216,7 +216,7 @@ pred<-predict(mod_filtered,newdata=test)
 pml_write_files(pred)
 ``` 
 
-To **validate** our model obtained during the training session, we use the provided testing dataset available [here](https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv). The number of datapoints in the testing dataset is: $$`r testdims[1]`$$
+To **validate** our model obtained during the training session, I use the provided testing dataset available [here](https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv). The number of datapoints in the testing dataset is: $$`r testdims[1]`$$
 
 ## Predictions for test cases:
 
@@ -228,4 +228,6 @@ After submission to the online system of *Coursera*, the calculation of validity
 
 # Conclusions
 
-**Based on above findings, we can conclude, that the quality of movements based on detailed measurements by self quantification tools can be predicted reliably.**
+**Based on above findings, I can conclude, that the quality of movements based on detailed measurements by self quantification tools can be predicted reliably.**
+
+[^1]: The filtering of correlations under -0,7 could be also beneficial, but due to time constraints, I could not perform this analysis.
