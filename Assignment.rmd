@@ -71,7 +71,6 @@ training$classe<-classe
 #describe(training)
 #describeBy(training$classe, training[,1])
 #ggpairs(data=training,colour="classe")
-#corrplot(cors>0.5, method = "circle")
 
 hist(as.numeric(classe), xlab="Classes", xaxt="n", main="Observations in 'classe' categories")
 axis(side=1,at=c(1,2,3,4,5), labels=c('A','B','C','D','E'))
@@ -141,9 +140,16 @@ output<-flattenCorrMatrix(cors$r,cors$P)
 Thr<-0.7
 ``` 
 
-A more thorough analysis of the traininging data reveals, that there are **clusters of variables** within the traininging set, that have **significantly high correlation** with each-other. Here is a subset of the correlation matrix with a **threshold** of $$`r Thr`$$ which can be considered high.
+A more thorough analysis of the traininging data reveals, that there are **clusters of variables** within the traininging set, that have **significantly high correlation** with each-other.
 
-```{r correlation analysis, echo=F, cache=TRUE}
+```{r correlation plot, echo=F, cache=TRUE, fig.width = 13, fig.height = 13}
+co<-cor(backup)
+corrplot(co, method = "circle")
+``` 
+
+Here is a subset of the correlation matrix with a **threshold** of $$`r Thr`$$ which can be considered high.
+
+```{r correlation analysis, echo=F, cache=TRUE, fig.width = 13, fig.height = 13}
 filtered_output<-output[output$cor>Thr,c("row","column","cor")]
 print(filtered_output)
 ``` 
